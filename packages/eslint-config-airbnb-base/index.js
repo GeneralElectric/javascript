@@ -7,15 +7,11 @@ module.exports = {
     './rules/variables',
     './rules/es6',
     './rules/imports',
+    './rules/strict',
   ].map(require.resolve),
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2018,
     sourceType: 'module',
-    ecmaFeatures: {
-      experimentalObjectRestSpread: true,
-    },
   },
-  rules: {
-    strict: 'error',
-  },
+  rules: {},
 };
