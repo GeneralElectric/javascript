@@ -1,5 +1,54 @@
 # GeneralElectric Vue 2 Style Guide [Source](https://github.com/vuejs/vuejs.org/blob/master/src/v2/style-guide/index.md)
 
+> It is **strongly recommended** to add the official [Vue ESLint Plugin](https://github.com/vuejs/eslint-plugin-vue) into your project to enforce most, if not all rules below.
+
+Add the plugin with **one** of the following methods below, depending on how you constructed your Vue app:
+
+#### Yarn
+
+```sh
+yarn add -D eslint eslint-plugin-vue
+```
+
+#### Vue CLI
+
+```sh
+vue add @vue/cli-plugin-eslint
+```
+
+#### NPM
+
+```sh
+npm install --save-dev eslint eslint-plugin-vue
+```
+
+> Requirements: ESLint v5.0.0 or later & Node.js v6.5.0 or later
+
+### Configuration
+
+Use `.eslintrc.*` file to configure rules. See also: https://eslint.org/docs/user-guide/configuring.
+
+Example `.eslintrc.js`:
+
+```js
+module.exports = {
+  extends: [
+    // add more generic rulesets here, such as:
+    // 'eslint:recommended',
+    'plugin:vue/recommended'
+  ],
+  rules: {
+    // override/add rules settings here, such as:
+    // 'vue/no-unused-vars': 'error'
+  }
+}
+```
+
+See the [rule list](https://eslint.vuejs.org/rules/) to get the `extends` & `rules` that this plugin provides.
+
+
+# Introduction
+
 This is the official style guide for Vue-specific code. If you use Vue in a project, it's a great reference to avoid errors, bikeshedding, and anti-patterns. However, we don't believe that any style guide is ideal for all teams or projects, so mindful deviations are encouraged based on past experience, the surrounding tech stack, and personal values.
 
 For the most part, we also avoid suggestions about JavaScript or HTML in general. We don't mind whether you use semicolons or trailing commas. We don't mind whether your HTML uses single-quotes or double-quotes for attribute values. Some exceptions will exist however, where we've found that a particular pattern is helpful in the context of Vue.
