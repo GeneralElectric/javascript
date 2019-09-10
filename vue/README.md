@@ -34,16 +34,15 @@ Some features of Vue exist to accommodate rare edge cases or smoother migrations
 
 
 
-### Multi-word component names <sup data-p="a">essential</sup>
+### Multi-word component names (essential)
 
 **Component names should always be multi-word, except for root `App` components, and built-in components provided by Vue, such as `<transition>` or `<component>`.**
 
 This [prevents conflicts](http://w3c.github.io/webcomponents/spec/custom/#valid-custom-element-name) with existing and future HTML elements, since all HTML elements are a single word.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` js
+```js
 Vue.component('todo', {
   // ...
 })
@@ -55,43 +54,31 @@ export default {
   // ...
 }
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` js
+```js
 Vue.component('todo-item', {
   // ...
 })
 ```
 
-``` js
+```js
 export default {
   name: 'TodoItem',
   // ...
 }
 ```
-{% raw %}</div>{% endraw %}
 
-
-
-### Component data <sup data-p="a">essential</sup>
+### Component data (essential)
 
 **Component `data` must be a function.**
 
 When using the `data` property on a component (i.e. anywhere except on `new Vue`), the value must be a function that returns an object.
 
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
-
 When the value of `data` is an object, it's shared across all instances of a component. Imagine, for example, a `TodoList` component with this data:
 
-``` js
+```js
 data: {
   listTitle: '',
   todos: []
@@ -102,7 +89,7 @@ We might want to reuse this component, allowing users to maintain multiple lists
 
 Instead, we want each component instance to only manage its own data. For that to happen, each instance must generate a unique data object. In JavaScript, this can be accomplished by returning the object in a function:
 
-``` js
+```js
 data: function () {
   return {
     listTitle: '',
@@ -110,12 +97,10 @@ data: function () {
   }
 }
 ```
-{% raw %}</details>{% endraw %}
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` js
+```js
 Vue.component('some-comp', {
   data: {
     foo: 'bar'
@@ -123,18 +108,17 @@ Vue.component('some-comp', {
 })
 ```
 
-``` js
+```js
 export default {
   data: {
     foo: 'bar'
   }
 }
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
-``` js
+
+```js
 Vue.component('some-comp', {
   data: function () {
     return {
@@ -144,8 +128,8 @@ Vue.component('some-comp', {
 })
 ```
 
-``` js
-// In a .vue file
+```js
+// In a .vue file (ES6 syntax)
 export default {
   data () {
     return {
@@ -155,7 +139,7 @@ export default {
 }
 ```
 
-``` js
+```js
 // It's OK to use an object directly in a root
 // Vue instance, since only a single instance
 // will ever exist.
@@ -165,49 +149,35 @@ new Vue({
   }
 })
 ```
-{% raw %}</div>{% endraw %}
 
-
-
-### Prop definitions <sup data-p="a">essential</sup>
+### Prop definitions (essential)
 
 **Prop definitions should be as detailed as possible.**
 
 In committed code, prop definitions should always be as detailed as possible, specifying at least type(s).
-
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
 
 Detailed [prop definitions](https://vuejs.org/v2/guide/components.html#Prop-Validation) have two advantages:
 
 - They document the API of the component, so that it's easy to see how the component is meant to be used.
 - In development, Vue will warn you if a component is ever provided incorrectly formatted props, helping you catch potential sources of error.
 
-{% raw %}</details>{% endraw %}
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` js
+```js
 // This is only OK when prototyping
 props: ['status']
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` js
+```js
 props: {
   status: String
 }
 ```
 
-``` js
+```js
 // Even better!
 props: {
   status: {
@@ -224,26 +194,16 @@ props: {
   }
 }
 ```
-{% raw %}</div>{% endraw %}
 
-
-
-### Keyed `v-for` <sup data-p="a">essential</sup>
+### Keyed `v-for` (essential)
 
 **Always use `key` with `v-for`.**
 
 `key` with `v-for` is _always_ required on components, in order to maintain internal component state down the subtree. Even for elements though, it's a good practice to maintain predictable behavior, such as [object constancy](https://bost.ocks.org/mike/constancy/) in animations.
 
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
-
 Let's say you have a list of todos:
 
-``` js
+```js
 data: function () {
   return {
     todos: [
@@ -266,24 +226,19 @@ The problem is, there are cases where it's important not to delete elements that
 
 In our experience, it's better to _always_ add a unique key, so that you and your team simply never have to worry about these edge cases. Then in the rare, performance-critical scenarios where object constancy isn't necessary, you can make a conscious exception.
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <ul>
   <li v-for="todo in todos">
     {{ todo.text }}
   </li>
 </ul>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <ul>
   <li
     v-for="todo in todos"
@@ -293,11 +248,8 @@ In our experience, it's better to _always_ add a unique key, so that you and you
   </li>
 </ul>
 ```
-{% raw %}</div>{% endraw %}
 
-
-
-### Avoid `v-if` with `v-for` <sup data-p="a">essential</sup>
+### Avoid `v-if` with `v-for` (essential)
 
 **Never use `v-if` on the same element as `v-for`.**
 
@@ -307,16 +259,10 @@ There are two common cases where this can be tempting:
 
 - To avoid rendering a list if it should be hidden (e.g. `v-for="user in users" v-if="shouldShowUsers"`). In these cases, move the `v-if` to a container element (e.g. `ul`, `ol`).
 
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
 
 When Vue processes directives, `v-for` has a higher priority than `v-if`, so that this template:
 
-``` html
+```html
 <ul>
   <li
     v-for="user in users"
@@ -330,7 +276,7 @@ When Vue processes directives, `v-for` has a higher priority than `v-if`, so tha
 
 Will be evaluated similar to:
 
-``` js
+```js
 this.users.map(function (user) {
   if (user.isActive) {
     return user.name
@@ -342,7 +288,7 @@ So even if we only render elements for a small fraction of users, we have to ite
 
 By iterating over a computed property instead, like this:
 
-``` js
+```js
 computed: {
   activeUsers: function () {
     return this.users.filter(function (user) {
@@ -352,7 +298,7 @@ computed: {
 }
 ```
 
-``` html
+```html
 <ul>
   <li
     v-for="user in activeUsers"
@@ -371,7 +317,7 @@ We get the following benefits:
 
 We get similar benefits from updating:
 
-``` html
+```html
 <ul>
   <li
     v-for="user in users"
@@ -385,7 +331,7 @@ We get similar benefits from updating:
 
 to:
 
-``` html
+```html
 <ul v-if="shouldShowUsers">
   <li
     v-for="user in users"
@@ -398,12 +344,9 @@ to:
 
 By moving the `v-if` to a container element, we're no longer checking `shouldShowUsers` for _every_ user in the list. Instead, we check it once and don't even evaluate the `v-for` if `shouldShowUsers` is false.
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <ul>
   <li
     v-for="user in users"
@@ -415,7 +358,7 @@ By moving the `v-if` to a container element, we're no longer checking `shouldSho
 </ul>
 ```
 
-``` html
+```html
 <ul>
   <li
     v-for="user in users"
@@ -426,12 +369,10 @@ By moving the `v-if` to a container element, we're no longer checking `shouldSho
   </li>
 </ul>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <ul>
   <li
     v-for="user in activeUsers"
@@ -442,7 +383,7 @@ By moving the `v-if` to a container element, we're no longer checking `shouldSho
 </ul>
 ```
 
-``` html
+```html
 <ul v-if="shouldShowUsers">
   <li
     v-for="user in users"
@@ -452,11 +393,8 @@ By moving the `v-if` to a container element, we're no longer checking `shouldSho
   </li>
 </ul>
 ```
-{% raw %}</div>{% endraw %}
 
-
-
-### Component style scoping <sup data-p="a">essential</sup>
+### Component style scoping (essential)
 
 **For applications, styles in a top-level `App` component and in layout components may be global, but all other components should always be scoped.**
 
@@ -464,25 +402,15 @@ This is only relevant for [single-file components](../guide/single-file-componen
 
 **Component libraries, however, should prefer a class-based strategy instead of using the `scoped` attribute.**
 
-This makes overriding internal styles easier, with human-readable class names that don't have too high specificity, but are still very unlikely to result in a conflict.
-
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
+This makes overriding internal styles easier, with human-readable class names that don't have too high specificity, but are still very unlikely to result in a conflict
 
 If you are developing a large project, working with other developers, or sometimes include 3rd-party HTML/CSS (e.g. from Auth0), consistent scoping will ensure that your styles only apply to the components they are meant for.
 
 Beyond the `scoped` attribute, using unique class names can help ensure that 3rd-party CSS does not apply to your own HTML. For example, many projects use the `button`, `btn`, or `icon` class names, so even if not using a strategy such as BEM, adding an app-specific and/or component-specific prefix (e.g. `ButtonClose-icon`) can provide some protection.
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <template>
   <button class="btn btn-close">X</button>
 </template>
@@ -493,12 +421,10 @@ Beyond the `scoped` attribute, using unique class names can help ensure that 3rd
 }
 </style>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <template>
   <button class="button button-close">X</button>
 </template>
@@ -516,7 +442,7 @@ Beyond the `scoped` attribute, using unique class names can help ensure that 3rd
 </style>
 ```
 
-``` html
+```html
 <template>
   <button :class="[$style.button, $style.buttonClose]">X</button>
 </template>
@@ -534,7 +460,7 @@ Beyond the `scoped` attribute, using unique class names can help ensure that 3rd
 </style>
 ```
 
-``` html
+```html
 <template>
   <button class="c-Button c-Button--close">X</button>
 </template>
@@ -551,20 +477,10 @@ Beyond the `scoped` attribute, using unique class names can help ensure that 3rd
 }
 </style>
 ```
-{% raw %}</div>{% endraw %}
 
-
-
-### Private property names <sup data-p="a">essential</sup>
+### Private property names (essential)
 
 **Use module scoping to keep private functions inaccessible from the outside. If that's not possible, always use the `$_` prefix for custom private properties in a plugin, mixin, etc that should not be considered public API. Then to avoid conflicts with code by other authors, also include a named scope (e.g. `$_yourPluginName_`).**
-
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
 
 Vue uses the `_` prefix to define its own private properties, so using the same prefix (e.g. `_update`) risks overwriting an instance property. Even if you check and Vue is not currently using a particular property name, there is no guarantee a conflict won't arise in a later version.
 
@@ -572,12 +488,9 @@ As for the `$` prefix, its purpose within the Vue ecosystem is special instance 
 
 Instead, we recommend combining the two prefixes into `$_`, as a convention for user-defined private properties that guarantee no conflicts with Vue.
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` js
+```js
 var myGreatMixin = {
   // ...
   methods: {
@@ -588,7 +501,7 @@ var myGreatMixin = {
 }
 ```
 
-``` js
+```js
 var myGreatMixin = {
   // ...
   methods: {
@@ -599,7 +512,7 @@ var myGreatMixin = {
 }
 ```
 
-``` js
+```js
 var myGreatMixin = {
   // ...
   methods: {
@@ -610,7 +523,7 @@ var myGreatMixin = {
 }
 ```
 
-``` js
+```js
 var myGreatMixin = {
   // ...
   methods: {
@@ -621,12 +534,9 @@ var myGreatMixin = {
 }
 ```
 
-{% raw %}</div>{% endraw %}
-
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` js
+```js
 var myGreatMixin = {
   // ...
   methods: {
@@ -637,7 +547,7 @@ var myGreatMixin = {
 }
 ```
 
-``` js
+```js
 // Even better!
 var myGreatMixin = {
   // ...
@@ -655,24 +565,20 @@ function myPrivateFunction() {
 
 export default myGreatMixin
 ```
-{% raw %}</div>{% endraw %}
-
-
 
 ## Priority B Rules: Strongly Recommended (Improving Readability)
 
 
 
-### Component files <sup data-p="b">strongly recommended</sup>
+### Component files (strongly recommended)
 
 **Whenever a build system is available to concatenate files, each component should be in its own file.**
 
 This helps you to more quickly find a component when you need to edit it or review how to use it.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` js
+```js
 Vue.component('TodoList', {
   // ...
 })
@@ -681,9 +587,7 @@ Vue.component('TodoItem', {
   // ...
 })
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
 ```
@@ -697,17 +601,14 @@ components/
 |- TodoList.vue
 |- TodoItem.vue
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Single-file component filename casing <sup data-p="b">strongly recommended</sup>
+### Single-file component filename casing (strongly recommended)
 
 **Filenames of [single-file components](../guide/single-file-components.html) should either be always PascalCase or always kebab-case.**
 
 PascalCase works best with autocompletion in code editors, as it's consistent with how we reference components in JS(X) and templates, wherever possible. However, mixed case filenames can sometimes create issues on case-insensitive file systems, which is why kebab-case is also perfectly acceptable.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
 ```
@@ -719,9 +620,7 @@ components/
 components/
 |- myComponent.vue
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
 ```
@@ -733,20 +632,11 @@ components/
 components/
 |- my-component.vue
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Base component names <sup data-p="b">strongly recommended</sup>
+### Base component names (strongly recommended)
 
 **Base components (a.k.a. presentational, dumb, or pure components) that apply app-specific styling and conventions should all begin with a specific prefix, such as `Base`, `App`, or `V`.**
-
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
 
 These components lay the foundation for consistent styling and behavior in your application. They may **only** contain:
 
@@ -766,7 +656,7 @@ Some advantages of this convention:
 
 - Since these components are so frequently used, you may want to simply make them global instead of importing them everywhere. A prefix makes this possible with Webpack:
 
-  ``` js
+  ```js
   var requireComponent = require.context("./src", true, /^Base[A-Z]/)
   requireComponent.keys().forEach(function (fileName) {
     var baseComponentConfig = requireComponent(fileName)
@@ -780,9 +670,6 @@ Some advantages of this convention:
   })
   ```
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
 ```
@@ -791,9 +678,7 @@ components/
 |- VueTable.vue
 |- Icon.vue
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
 ```
@@ -816,17 +701,14 @@ components/
 |- VTable.vue
 |- VIcon.vue
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Single-instance component names <sup data-p="b">strongly recommended</sup>
+### Single-instance component names (strongly recommended)
 
 **Components that should only ever have a single active instance should begin with the `The` prefix, to denote that there can be only one.**
 
 This does not mean the component is only used in a single page, but it will only be used once _per page_. These components never accept any props, since they are specific to your app, not their context within your app. If you find the need to add props, it's a good indication that this is actually a reusable component that is only used once per page _for now_.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
 ```
@@ -834,9 +716,7 @@ components/
 |- Heading.vue
 |- MySidebar.vue
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
 ```
@@ -844,22 +724,13 @@ components/
 |- TheHeading.vue
 |- TheSidebar.vue
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Tightly coupled component names <sup data-p="b">strongly recommended</sup>
+### Tightly coupled component names (strongly recommended)
 
 **Child components that are tightly coupled with their parent should include the parent component name as a prefix.**
 
 If a component only makes sense in the context of a single parent component, that relationship should be evident in its name. Since editors typically organize files alphabetically, this also keeps these related files next to each other.
-
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
 
 You might be tempted to solve this problem by nesting child components in directories named after their parent. For example:
 
@@ -883,14 +754,11 @@ components/
 |- TodoList.vue
 ```
 
-This isn't recommended, as it results in:
+This _isn't recommended_, as it results in:
 
 - Many files with similar names, making rapid file switching in code editors more difficult.
 - Many nested sub-directories, which increases the time it takes to browse components in an editor's sidebar.
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
 ```
@@ -905,9 +773,7 @@ components/
 |- SearchSidebar.vue
 |- NavigationForSearchSidebar.vue
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
 ```
@@ -922,20 +788,11 @@ components/
 |- SearchSidebar.vue
 |- SearchSidebarNavigation.vue
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Order of words in component names <sup data-p="b">strongly recommended</sup>
+### Order of words in component names (strongly recommended)
 
 **Component names should start with the highest-level (often most general) words and end with descriptive modifying words.**
-
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
 
 You may be wondering:
 
@@ -981,9 +838,6 @@ You might be tempted to solve this problem differently, nesting all the search c
 - Name conflicts (e.g. multiple `ButtonDelete.vue` components) make it more difficult to quickly navigate to a specific component in a code editor.
 - Refactoring becomes more difficult, because find-and-replace often isn't sufficient to update relative references to a moved component.
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
 ```
@@ -995,9 +849,7 @@ components/
 |- SearchInput.vue
 |- TermsCheckbox.vue
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
 ```
@@ -1009,11 +861,9 @@ components/
 |- SettingsCheckboxTerms.vue
 |- SettingsCheckboxLaunchOnStartup.vue
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Self-closing components <sup data-p="b">strongly recommended</sup>
+### Self-closing components (strongly recommended)
 
 **Components with no content should be self-closing in [single-file components](../guide/single-file-components.html), string templates, and [JSX](../guide/render-function.html#JSX) - but never in DOM templates.**
 
@@ -1021,37 +871,32 @@ Components that self-close communicate that they not only have no content, but a
 
 Unfortunately, HTML doesn't allow custom elements to be self-closing - only [official "void" elements](https://www.w3.org/TR/html/syntax.html#void-elements). That's why the strategy is only possible when Vue's template compiler can reach the template before the DOM, then serve the DOM spec-compliant HTML.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <!-- In single-file components, string templates, and JSX -->
 <MyComponent></MyComponent>
 ```
 
-``` html
+```html
 <!-- In DOM templates -->
 <my-component/>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <!-- In single-file components, string templates, and JSX -->
 <MyComponent/>
 ```
 
-``` html
+```html
 <!-- In DOM templates -->
 <my-component></my-component>
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Component name casing in templates <sup data-p="b">strongly recommended</sup>
+### Component name casing in templates (strongly recommended)
 
 **In most projects, component names should always be PascalCase in [single-file components](../guide/single-file-components.html) and string templates - but kebab-case in DOM templates.**
 
@@ -1065,58 +910,46 @@ Unfortunately, due to HTML's case insensitivity, DOM templates must still use ke
 
 Also note that if you've already invested heavily in kebab-case, consistency with HTML conventions and being able to use the same casing across all your projects may be more important than the advantages listed above. In those cases, **using kebab-case everywhere is also acceptable.**
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <!-- In single-file components and string templates -->
 <mycomponent/>
 ```
 
-``` html
+```html
 <!-- In single-file components and string templates -->
 <myComponent/>
 ```
 
-``` html
+```html
 <!-- In DOM templates -->
 <MyComponent></MyComponent>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <!-- In single-file components and string templates -->
 <MyComponent/>
 ```
 
-``` html
+```html
 <!-- In DOM templates -->
 <my-component></my-component>
 ```
 
 OR
 
-``` html
+```html
 <!-- Everywhere -->
 <my-component></my-component>
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Component name casing in JS/JSX <sup data-p="b">strongly recommended</sup>
+### Component name casing in JS/JSX (strongly recommended)
 
 **Component names in JS/[JSX](../guide/render-function.html#JSX) should always be PascalCase, though they may be kebab-case inside strings for simpler applications that only use global component registration through `Vue.component`.**
-
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
 
 In JavaScript, PascalCase is the convention for classes and prototype constructors - essentially, anything that can have distinct instances. Vue components also have instances, so it makes sense to also use PascalCase. As an added benefit, using PascalCase within JSX (and templates) allows readers of the code to more easily distinguish between components and HTML elements.
 
@@ -1125,72 +958,64 @@ However, for applications that use **only** global component definitions via `Vu
 - It's rare that global components are ever referenced in JavaScript, so following a convention for JavaScript makes less sense.
 - These applications always include many in-DOM templates, where [kebab-case **must** be used](#Component-name-casing-in-templates-strongly-recommended).
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` js
+```js
 Vue.component('myComponent', {
   // ...
 })
 ```
 
-``` js
+```js
 import myComponent from './MyComponent.vue'
 ```
 
-``` js
+```js
 export default {
   name: 'myComponent',
   // ...
 }
 ```
 
-``` js
+```js
 export default {
   name: 'my-component',
   // ...
 }
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` js
+```js
 Vue.component('MyComponent', {
   // ...
 })
 ```
 
-``` js
+```js
 Vue.component('my-component', {
   // ...
 })
 ```
 
-``` js
+```js
 import MyComponent from './MyComponent.vue'
 ```
 
-``` js
+```js
 export default {
   name: 'MyComponent',
   // ...
 }
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Full-word component names <sup data-p="b">strongly recommended</sup>
+### Full-word component names (strongly recommended)
 
 **Component names should prefer full words over abbreviations.**
 
 The autocompletion in editors make the cost of writing longer names very low, while the clarity they provide is invaluable. Uncommon abbreviations, in particular, should always be avoided.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
 ```
@@ -1198,9 +1023,7 @@ components/
 |- SdSettings.vue
 |- UProfOpts.vue
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
 ```
@@ -1208,112 +1031,94 @@ components/
 |- StudentDashboardSettings.vue
 |- UserProfileOptions.vue
 ```
-{% raw %}</div>{% endraw %}
 
-
-
-### Prop name casing <sup data-p="b">strongly recommended</sup>
+### Prop name casing (strongly recommended)
 
 **Prop names should always use camelCase during declaration, but kebab-case in templates and [JSX](../guide/render-function.html#JSX).**
 
 We're simply following the conventions of each language. Within JavaScript, camelCase is more natural. Within HTML, kebab-case is.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` js
+```js
 props: {
   'greeting-text': String
 }
 ```
 
-{% codeblock lang:html %}
+```html
 <WelcomeMessage greetingText="hi"/>
-{% endcodeblock %}
-{% raw %}</div>{% endraw %}
+```
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` js
+```js
 props: {
   greetingText: String
 }
 ```
 
-{% codeblock lang:html %}
+```html
 <WelcomeMessage greeting-text="hi"/>
-{% endcodeblock %}
-{% raw %}</div>{% endraw %}
+```
 
-
-
-### Multi-attribute elements <sup data-p="b">strongly recommended</sup>
+### Multi-attribute elements (strongly recommended)
 
 **Elements with multiple attributes should span multiple lines, with one attribute per line.**
 
 In JavaScript, splitting objects with multiple properties over multiple lines is widely considered a good convention, because it's much easier to read. Our templates and [JSX](../guide/render-function.html#JSX) deserve the same consideration.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <img src="https://vuejs.org/images/logo.png" alt="Vue Logo">
 ```
 
-``` html
+```html
 <MyComponent foo="a" bar="b" baz="c"/>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <img
   src="https://vuejs.org/images/logo.png"
   alt="Vue Logo"
 >
 ```
 
-``` html
+```html
 <MyComponent
   foo="a"
   bar="b"
   baz="c"
 />
 ```
-{% raw %}</div>{% endraw %}
 
-
-
-### Simple expressions in templates <sup data-p="b">strongly recommended</sup>
+### Simple expressions in templates (strongly recommended)
 
 **Component templates should only include simple expressions, with more complex expressions refactored into computed properties or methods.**
 
 Complex expressions in your templates make them less declarative. We should strive to describe _what_ should appear, not _how_ we're computing that value. Computed properties and methods also allow the code to be reused.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 {{
   fullName.split(' ').map(function (word) {
     return word[0].toUpperCase() + word.slice(1)
   }).join(' ')
 }}
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <!-- In a template -->
 {{ normalizedFullName }}
 ```
 
-``` js
+```js
 // The complex expression has been moved to a computed property
 computed: {
   normalizedFullName: function () {
@@ -1323,20 +1128,11 @@ computed: {
   }
 }
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Simple computed properties <sup data-p="b">strongly recommended</sup>
+### Simple computed properties (strongly recommended)
 
 **Complex computed properties should be split into as many simpler properties as possible.**
-
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
 
 Simpler, well-named computed properties are:
 
@@ -1354,12 +1150,9 @@ Simpler, well-named computed properties are:
 
   Small, focused computed properties make fewer assumptions about how information will be used, so require less refactoring as requirements change.
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` js
+```js
 computed: {
   price: function () {
     var basePrice = this.manufactureCost / (1 - this.profitMargin)
@@ -1370,12 +1163,10 @@ computed: {
   }
 }
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` js
+```js
 computed: {
   basePrice: function () {
     return this.manufactureCost / (1 - this.profitMargin)
@@ -1388,64 +1179,55 @@ computed: {
   }
 }
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Quoted attribute values <sup data-p="b">strongly recommended</sup>
+### Quoted attribute values (strongly recommended)
 
 **Non-empty HTML attribute values should always be inside quotes (single or double, whichever is not used in JS).**
 
 While attribute values without any spaces are not required to have quotes in HTML, this practice often leads to _avoiding_ spaces, making attribute values less readable.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <input type=text>
 ```
 
-``` html
+```html
 <AppSidebar :style={width:sidebarWidth+'px'}>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <input type="text">
 ```
 
-``` html
+```html
 <AppSidebar :style="{ width: sidebarWidth + 'px' }">
 ```
-{% raw %}</div>{% endraw %}
 
-
-
-### Directive shorthands <sup data-p="b">strongly recommended</sup>
+### Directive shorthands (strongly recommended)
 
 **Directive shorthands (`:` for `v-bind:`, `@` for `v-on:` and `#` for `v-slot`) should be used always or never.**
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <input
   v-bind:value="newTodoText"
   :placeholder="newTodoInstructions"
 >
 ```
 
-``` html
+```html
 <input
   v-on:input="onInput"
   @focus="onFocus"
 >
 ```
 
-``` html
+```html
 <template v-slot:header>
   <h1>Here might be a page title</h1> 
 </template>
@@ -1454,40 +1236,38 @@ While attribute values without any spaces are not required to have quotes in HTM
   <p>Here's some contact info</p>
 </template>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <input
   :value="newTodoText"
   :placeholder="newTodoInstructions"
 >
 ```
 
-``` html
+```html
 <input
   v-bind:value="newTodoText"
   v-bind:placeholder="newTodoInstructions"
 >
 ```
 
-``` html
+```html
 <input
   @input="onInput"
   @focus="onFocus"
 >
 ```
 
-``` html
+```html
 <input
   v-on:input="onInput"
   v-on:focus="onFocus"
 >
 ```
 
-``` html
+```html
 <template v-slot:header>
   <h1>Here might be a page title</h1> 
 </template>
@@ -1497,7 +1277,7 @@ While attribute values without any spaces are not required to have quotes in HTM
 </template>
 ```
 
-``` html
+```html
 <template #header>
   <h1>Here might be a page title</h1> 
 </template>
@@ -1506,16 +1286,12 @@ While attribute values without any spaces are not required to have quotes in HTM
   <p>Here's some contact info</p>
 </template>
 ```
-{% raw %}</div>{% endraw %}
-
-
 
 
 ## Priority C Rules: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
 
 
-
-### Component/instance options order <sup data-p="c">recommended</sup>
+### Component/instance options order (recommended)
 
 **Component/instance options should be ordered consistently.**
 
@@ -1576,7 +1352,7 @@ This is the default order we recommend for component options. They're split into
 
 
 
-### Element attribute order <sup data-p="c">recommended</sup>
+### Element attribute order (recommended)
 
 **The attributes of elements (including components) should be ordered consistently.**
 
@@ -1621,16 +1397,15 @@ This is the default order we recommend for component options. They're split into
 
 
 
-### Empty lines in component/instance options <sup data-p="c">recommended</sup>
+### Empty lines in component/instance options (recommended)
 
 **You may want to add one empty line between multi-line properties, particularly if the options can no longer fit on your screen without scrolling.**
 
 When components begin to feel cramped or difficult to read, adding spaces between multi-line properties can make them easier to skim again. In some editors, such as Vim, formatting options like this can also make them easier to navigate with the keyboard.
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` js
+```js
 props: {
   value: {
     type: String,
@@ -1657,7 +1432,7 @@ computed: {
 }
 ```
 
-``` js
+```js
 // No spaces are also fine, as long as the component
 // is still easy to read and navigate.
 props: {
@@ -1681,24 +1456,21 @@ computed: {
   }
 }
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Single-file component top-level element order <sup data-p="c">recommended</sup>
+### Single-file component top-level element order (recommended)
 
 **[Single-file components](../guide/single-file-components.html) should always order `<script>`, `<template>`, and `<style>` tags consistently, with `<style>` last, because at least one of the other two is always necessary.**
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <style>/* ... */</style>
 <script>/* ... */</script>
 <template>...</template>
 ```
 
-``` html
+```html
 <!-- ComponentA.vue -->
 <script>/* ... */</script>
 <template>...</template>
@@ -1709,12 +1481,10 @@ computed: {
 <script>/* ... */</script>
 <style>/* ... */</style>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <!-- ComponentA.vue -->
 <script>/* ... */</script>
 <template>...</template>
@@ -1726,7 +1496,7 @@ computed: {
 <style>/* ... */</style>
 ```
 
-``` html
+```html
 <!-- ComponentA.vue -->
 <template>...</template>
 <script>/* ... */</script>
@@ -1737,7 +1507,6 @@ computed: {
 <script>/* ... */</script>
 <style>/* ... */</style>
 ```
-{% raw %}</div>{% endraw %}
 
 
 
@@ -1745,16 +1514,15 @@ computed: {
 
 
 
-### `v-if`/`v-else-if`/`v-else` without `key` <sup data-p="d">use with caution</sup>
+### `v-if`/`v-else-if`/`v-else` without `key` (use with caution)
 
 **It's usually best to use `key` with `v-if` + `v-else`, if they are the same element type (e.g. both `<div>` elements).**
 
 By default, Vue updates the DOM as efficiently as possible. That means when switching between elements of the same type, it simply patches the existing element, rather than removing it and adding a new one in its place. This can have [unintended consequences](https://jsfiddle.net/chrisvfritz/bh8fLeds/) if these elements should not actually be considered the same.
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <div v-if="error">
   Error: {{ error }}
 </div>
@@ -1762,9 +1530,7 @@ By default, Vue updates the DOM as efficiently as possible. That means when swit
   {{ results }}
 </div>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
 ``` html
@@ -1781,33 +1547,21 @@ By default, Vue updates the DOM as efficiently as possible. That means when swit
   {{ results }}
 </div>
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Element selectors with `scoped` <sup data-p="d">use with caution</sup>
+### Element selectors with `scoped` (use with caution)
 
 **Element selectors should be avoided with `scoped`.**
 
 Prefer class selectors over element selectors in `scoped` styles, because large numbers of element selectors are slow.
 
-{% raw %}
-<details>
-<summary>
-  <h4>Detailed Explanation</h4>
-</summary>
-{% endraw %}
-
 To scope styles, Vue adds a unique attribute to component elements, such as `data-v-f3f3eg9`. Then selectors are modified so that only matching elements with this attribute are selected (e.g. `button[data-v-f3f3eg9]`).
 
 The problem is that large numbers of [element-attribute selectors](http://stevesouders.com/efws/css-selectors/csscreate.php?n=1000&sel=a%5Bhref%5D&body=background%3A+%23CFD&ne=1000) (e.g. `button[data-v-f3f3eg9]`) will be considerably slower than [class-attribute selectors](http://stevesouders.com/efws/css-selectors/csscreate.php?n=1000&sel=.class%5Bhref%5D&body=background%3A+%23CFD&ne=1000) (e.g. `.btn-close[data-v-f3f3eg9]`), so class selectors should be preferred whenever possible.
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` html
+```html
 <template>
   <button>X</button>
 </template>
@@ -1818,12 +1572,10 @@ button {
 }
 </style>
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` html
+```html
 <template>
   <button class="btn btn-close">X</button>
 </template>
@@ -1834,11 +1586,9 @@ button {
 }
 </style>
 ```
-{% raw %}</div>{% endraw %}
 
 
-
-### Implicit parent-child communication <sup data-p="d">use with caution</sup>
+### Implicit parent-child communication (use with caution)
 
 **Props and events should be preferred for parent-child component communication, instead of `this.$parent` or mutating props.**
 
@@ -1846,10 +1596,9 @@ An ideal Vue application is props down, events up. Sticking to this convention m
 
 The problem is, there are also many _simple_ cases where these patterns may offer convenience. Beware: do not be seduced into trading simplicity (being able to understand the flow of your state) for short-term convenience (writing less code).
 
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` js
+```js
 Vue.component('TodoItem', {
   props: {
     todo: {
@@ -1861,7 +1610,7 @@ Vue.component('TodoItem', {
 })
 ```
 
-``` js
+```js
 Vue.component('TodoItem', {
   props: {
     todo: {
@@ -1887,12 +1636,10 @@ Vue.component('TodoItem', {
   `
 })
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` js
+```js
 Vue.component('TodoItem', {
   props: {
     todo: {
@@ -1909,7 +1656,7 @@ Vue.component('TodoItem', {
 })
 ```
 
-``` js
+```js
 Vue.component('TodoItem', {
   props: {
     todo: {
@@ -1927,22 +1674,18 @@ Vue.component('TodoItem', {
   `
 })
 ```
-{% raw %}</div>{% endraw %}
 
 
 
-### Non-flux state management <sup data-p="d">use with caution</sup>
+### Non-flux state management (use with caution)
 
 **[Vuex](https://github.com/vuejs/vuex) should be preferred for global state management, instead of `this.$root` or a global event bus.**
 
 Managing state on `this.$root` and/or using a [global event bus](https://vuejs.org/v2/guide/migration.html#dispatch-and-broadcast-replaced) can be convenient for very simple cases, but are not appropriate for most applications. Vuex offers not only a central place to manage state, but also tools for organizing, tracking, and debugging state changes.
 
-{% raw %}</details>{% endraw %}
-
-{% raw %}<div class="style-example example-bad">{% endraw %}
 #### Bad
 
-``` js
+```js
 // main.js
 new Vue({
   data: {
@@ -1961,12 +1704,10 @@ new Vue({
   }
 })
 ```
-{% raw %}</div>{% endraw %}
 
-{% raw %}<div class="style-example example-good">{% endraw %}
 #### Good
 
-``` js
+```js
 // store/modules/todos.js
 export default {
   state: {
@@ -1985,7 +1726,7 @@ export default {
 }
 ```
 
-``` html
+```html
 <!-- TodoItem.vue -->
 <template>
   <span>
@@ -2010,11 +1751,8 @@ export default {
 }
 </script>
 ```
-{% raw %}</div>{% endraw %}
 
-
-
-{% raw %}
+```html
 <script>
 (function () {
   var enforcementTypes = {
@@ -2050,7 +1788,7 @@ export default {
   // })
 })()
 </script>
-{% endraw %}
+```
 
 ## References
 
