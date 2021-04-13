@@ -1,4 +1,4 @@
-const restrictedGlobals = require('eslint-restricted-globals');
+const confusingBrowserGlobals = require('confusing-browser-globals');
 
 module.exports = {
   rules: {
@@ -12,12 +12,23 @@ module.exports = {
     'no-delete-var': 'error',
 
     // disallow labels that share a name with a variable
-    // http://eslint.org/docs/rules/no-label-var
+    // https://eslint.org/docs/rules/no-label-var
     'no-label-var': 'error',
 
     // disallow specific globals
-    // TODO: enable, semver-major
-    'no-restricted-globals': ['off'].concat(restrictedGlobals),
+    'no-restricted-globals': [
+      'error',
+      {
+        name: 'isFinite',
+        message:
+          'Use Number.isFinite instead https://github.com/airbnb/javascript#standard-library--isfinite',
+      },
+      {
+        name: 'isNaN',
+        message:
+          'Use Number.isNaN instead https://github.com/airbnb/javascript#standard-library--isnan',
+      },
+    ].concat(confusingBrowserGlobals),
 
     // disallow declaration of variables already declared in the outer scope
     'no-shadow': 'error',
@@ -32,7 +43,7 @@ module.exports = {
     'no-undef-init': 'error',
 
     // disallow use of undefined variable
-    // http://eslint.org/docs/rules/no-undefined
+    // https://eslint.org/docs/rules/no-undefined
     // TODO: enable?
     'no-undefined': 'off',
 

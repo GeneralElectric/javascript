@@ -12,15 +12,24 @@ We export two ESLint configurations for your usage.
 
 Our default export contains all of our ESLint rules, including ECMAScript 6+. It requires `eslint` and `eslint-plugin-import`.
 
-If you use yarn, run `yarn add --dev eslint-config-airbnb-base eslint-plugin-import`, or see below for npm instructions.
-
 1. Install the correct versions of each package, which are listed by the command:
 
   ```sh
   npm info "eslint-config-airbnb-base@latest" peerDependencies
   ```
 
-  Linux/OSX users can run
+  If using **npm 5+**, use this shortcut
+
+  ```sh
+  npx install-peerdeps --dev eslint-config-airbnb-base
+  ```
+
+  If using **yarn**, you can also use the shortcut described above if you have npm 5+ installed on your machine, as the command will detect that you are using yarn and will act accordingly.
+  Otherwise, run `npm info "eslint-config-airbnb-base@latest" peerDependencies` to list the peer dependencies and versions, then run `yarn add --dev <dependency>@<version>` for each listed peer dependency.
+
+
+  If using **npm < 5**, Linux/OSX users can run
+
   ```sh
   (
     export PKG=eslint-config-airbnb-base;
@@ -34,7 +43,7 @@ If you use yarn, run `yarn add --dev eslint-config-airbnb-base eslint-plugin-imp
     npm install --save-dev eslint-config-airbnb-base eslint@^#.#.# eslint-plugin-import@^#.#.#
   ```
 
-  Windows users can either install all the peer dependencies manually, or use the [install-peerdeps](https://github.com/nathanhleung/install-peerdeps) cli tool.
+  If using **npm < 5**, Windows users can either install all the peer dependencies manually, or use the [install-peerdeps](https://github.com/nathanhleung/install-peerdeps) cli tool.
 
   ```sh
   npm install -g install-peerdeps
@@ -75,7 +84,11 @@ Lints ES5 and below. Requires `eslint` and `eslint-plugin-import`.
 
 2. Add `"extends": "airbnb-base/legacy"` to your .eslintrc
 
-See [Airbnb's overarching ESLint config](https://npmjs.com/eslint-config-airbnb), [Airbnb's Javascript styleguide](https://github.com/airbnb/javascript), and the [ESlint config docs](http://eslint.org/docs/user-guide/configuring#extending-configuration-files) for more information.
+See [Airbnb's overarching ESLint config](https://npmjs.com/eslint-config-airbnb), [Airbnb's JavaScript styleguide](https://github.com/airbnb/javascript), and the [ESlint config docs](https://eslint.org/docs/user-guide/configuring#extending-configuration-files) for more information.
+
+### eslint-config-airbnb-base/whitespace
+
+This entry point only errors on whitespace rules and sets all other rules to warnings. View the list of whitespace rules [here](https://github.com/airbnb/javascript/blob/master/packages/eslint-config-airbnb-base/whitespace.js).
 
 ## Improving this config
 

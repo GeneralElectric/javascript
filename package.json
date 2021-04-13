@@ -4,6 +4,7 @@
   "description": "A mostly reasonable approach to JavaScript.",
   "scripts": {
     "preinstall": "npm run install:config && npm run install:config:base",
+    "postinstall": "rm -rf node_modules/markdownlint-cli/node_modules/markdownlint",
     "install:config": "cd packages/eslint-config-airbnb && npm prune && npm install",
     "install:config:base": "cd packages/eslint-config-airbnb-base && npm prune && npm install",
     "lint": "markdownlint --config linters/.markdownlint.json README.md */README.md",
@@ -26,6 +27,9 @@
     "airbnb",
     "es6",
     "es2015",
+    "es2016",
+    "es2017",
+    "es2018",
     "react",
     "jsx"
   ],
@@ -36,6 +40,7 @@
   },
   "homepage": "https://github.com/airbnb/javascript",
   "devDependencies": {
-    "markdownlint-cli": "^0.3.1"
+    "markdownlint": "^0.20.4",
+    "markdownlint-cli": "^0.23.2"
   }
 }

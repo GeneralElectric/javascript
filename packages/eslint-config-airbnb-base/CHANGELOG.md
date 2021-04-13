@@ -1,3 +1,143 @@
+14.2.1 / 2020-11-06
+==================
+ - [base] `no-restricted-globals`: add better messages (#2320)
+ - [base] add new core eslint rules, set to off
+ - [deps] update `confusing-browser-globals`, `object.assign`
+ - [deps] update `eslint-plugin-import`, use valid `import/no-cycle` `maxDepth` option (#2250, #2249)
+ - [dev deps] update `@babel/runtime`, `eslint-find-rules`, `eslint-plugin-import`
+
+14.2.0 / 2020-06-10
+==================
+ - [new] add `eslint` `v7`
+ - [minor] Disallow multiple empty lines (#2238)
+ - [minor] Fix typo in no-multiple-empty-lines rule (#2168)
+ - [patch] Include 'context' exception for `no-param-reassign` (#2230)
+ - [patch] Allow triple-slash (///) comments (#2197)
+ - [patch] Disable `prefer-object-spread` for `airbnb-base/legacy` (#2198)
+ - [deps] update `eslint-plugin-import`, `eslint-plugin-react`, `babel-preset-airbnb`, `eslint-find-rules`, `in-publish`, `tape`, `object.entries`
+
+14.1.0 / 2020-03-12
+==================
+ - [minor] add new disabled rules, update eslint
+ - [minor] enable `import/no-useless-path-segments` for commonjs (#2113)
+ - [fix] `whitespace`: only set erroring rules to "warn"
+ - Fix indentation with JSX Fragments (#2157)
+ - [patch] `import/no-extraneous-dependencies`: Support karma config files (#2121)
+ - [readme] normalize multiline word according to merriam-webster (#2138)
+ - [deps] update `eslint`, `eslint-plugin-import`, `eslint-plugin-react`, `object.entries`, `confusing-browser-globals`
+ - [dev deps] update `@babel/runtime`, `babel-preset-airbnb`, `safe-publish-latest`, `tape`
+ - [tests] re-enable eslint rule `prefer-destructuring` internally (#2110)
+
+14.0.0 / 2019-08-09
+==================
+ - [breaking] `no-self-assign`: enable `props` option
+ - [breaking] enable `no-useless-catch`
+ - [breaking] enable `max-classes-per-file`
+ - [breaking] enable `no-misleading-character-class`
+ - [breaking] enable `no-async-promise-executor`
+ - [breaking] enable `prefer-object-spread`
+ - [breaking] `func-name-matching`: enable `considerPropertyDescriptor` option
+ - [breaking] `padded-blocks`: enable `allowSingleLineBlocks` option (#1255)
+ - [breaking] `no-multiple-empty-lines`: Restrict empty lines at beginning of file (#2042)
+ - [breaking] Set 'strict' to 'never' (#1962)
+ - [breaking] legacy: Enable 'strict' (#1962)
+ - [breaking] Simplifies `no-mixed-operators` (#1864)
+ - [breaking] Require parens for arrow function args (#1863)
+ - [breaking] add eslint v6, drop eslint v4
+ - [patch] `camelcase`: enable ignoreDestructuring
+ - [patch] Add markers to spaced-comment block for Flow types (#1966)
+ - [patch] Do not prefer destructuring for object assignment expression (#1583)
+ - [deps] update `confusing-browser-globals`, `eslint-plugin-import`, `tape`, `babel-preset-airbnb`
+ - [dev deps] update babel-related deps to latest
+ - [dev deps] update `eslint-find-rules`, `eslint-plugin-import`
+ - [tests] only run tests in non-lint per-package travis job
+ - [tests] use `eclint` instead of `editorconfig-tools`
+
+13.2.0 / 2019-07-01
+==================
+ - [minor] Enforce dangling underscores in method names (#1907)
+ - [fix] disable `no-var` in legacy entry point
+ - [patch] Ignore property modifications of `staticContext` params (#2029)
+ - [patch] `no-extraneous-dependencies`: Add jest.setup.js to devDeps (#1998)
+ - [meta] add disabled `prefer-named-capture-group` rule
+ - [meta] add disabled `no-useless-catch` config
+ - [deps] Switch to confusing-browser-globals (#1961)
+ - [deps] update `object.entries`, `eslint-plugin-import`, `eslint-plugin-jsx-a11y`, `eslint-plugin-react`, `tape`
+ - [docs] correct JavaScript capitalization (#2046)
+ - [readme] Improve eslint config setup instructions for yarn (#2001)
+ - [docs] fix docs for whitespace config (#1914, #1871)
+
+13.1.0 / 2018-08-13
+==================
+ - [new] add eslint v5 support (#1834)
+ - [deps] update `eslint-plugin-import`, `eslint`, `babel-preset-airbnb`, `safe-publish-latest`, `eslint-find-rules`
+ - [docs] fix typo in readme (#1855)
+ - [new] update base ecmaVersion to 2018; remove deprecated experimentalObjectRestSpread option
+
+13.0.0 / 2018-06-21
+==================
+ - [breaking] order of import statements is ignored for unassigned imports (#1782)
+ - [breaking] enable `import/no-cycle`: warn on cyclical dependencies (#1779)
+ - [breaking] Change import/no-self-import from "off" to "error" (#1770)
+ - [breaking] Update `object-curly-newline` to match eslint 4.18.0 (#1761)
+ - [breaking] enable `no-useless-path-segments` (#1743)
+ - [breaking] Prevent line breaks before and after `=` (#1710)
+ - [breaking] Add .mjs extension support (#1634)
+ - [breaking] enable `implicit-arrow-linebreak`
+ - [breaking] Enables `nonblock-statement-body-position` rule and adds link to guide (#1618)
+ - [breaking] `no-mixed-operators`: only warn on `**` and `%` mixed with arithmetic operators; removes violation against mixing common math operators. (#1611)
+ - [breaking] `import/named`: enable
+ - [breaking] `lines-between-class-members`: set to “always”
+ - [breaking] `no-else-return`: disallow else-if (#1595)
+ - [breaking] Enables eslint rule for operator-linebreak
+ - [new] Adds config entry point with only whitespace rules enabled (#1749, #1751)
+ - [minor] only allow one newline at the end (#1794)
+ - [patch] Adjust imports for vue-cli (#1809)
+ - [patch] Allow devDependencies for `foo_spec.js` naming style (#1732)
+ - [patch] `function-paren-newline`: change to "consistent"
+ - [patch] avoid `__mocks__` `no-extraneous-dependencies` check (#1772)
+ - [patch] Include 'accumulator' exception for `no-param-reassign` (#1768)
+ - [patch] Set import/extensions to ignorePackages (#1652)
+ - [patch] properly ignore indentation on jsx
+ - [patch] `array-callback-return`: enable `allowImplicit` option (#1668)
+ - [deps] update `eslint`, `eslint-plugin-import`
+ - [dev deps] update `babel-preset-airbnb`, `tape`, `eslint-find-rules`
+ - [meta] add ES2015-2018 in npm package keywords (#1587)
+ - [meta] Add licenses to sub packages (#1746)
+ - [docs] add `npx` shortcut (#1694)
+ - [docs] Use HTTPS for links to ESLint documentation (#1628)
+ - [tests] ensure all entry points parse
+
+12.1.0 / 2017-10-16
+==================
+ - [deps] update `eslint` to `v4.9`
+
+12.0.2 / 2017-10-05
+==================
+ - [deps] update `eslint`
+
+12.0.1 / 2017-09-27
+==================
+ - [fix] ensure all JSX elements are ignored by `indent` (#1569)
+ - [deps] update `eslint`
+
+12.0.0 / 2017-09-02
+==================
+ - [deps] [breaking] require `eslint` v4
+   - enable `function-paren-newline`, `for-direction`, `getter-return`, `no-compare-neg-zero`, `semi-style`, `object-curly-newline`, `no-buffer-constructor`, `no-restricted-globals`, `switch-colon-spacing`, `template-tag-spacing`, `prefer-promise-reject-errors`, `prefer-destructuring`
+   - improve `indent`, `no-multi-spaces`, `no-trailing-spaces`, `no-underscore-dangle`
+ - [breaking] move `comma-dangle` to Stylistic Issues (#1514)
+ - [breaking] Rules prohibiting global isNaN, isFinite (#1477)
+ - [patch] also disallow padding in classes and switches (#1403)
+ - [patch] support Protractor config files in import/no-extraneous-dependencies (#1543)
+
+11.3.2 / 2017-08-22
+==================
+ - [patch] Add jest.config.js to import/no-extraneous-dependencies devDeps (#1522)
+ - [patch] Improve Gruntfile glob pattern (#1503)
+ - [deps] update `eslint` v4, `tape`
+ - [docs] Specify yarn-specific install instructions (#1511)
+
 11.3.1 / 2017-07-24
 ==================
  - [fix] `legacy`: remove top-level `ecmaFeatures`
